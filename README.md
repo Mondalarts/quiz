@@ -1,185 +1,25 @@
-[untitled.txt](https://github.com/user-attachments/files/21461163/untitled.txt)
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Angshu Quiz Game</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      user-select: none;
-    }
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #00ffff, #ff0055);
-      min-height: 100vh;
-      overflow: hidden;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .quiz-container {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px cyan;
-      max-width: 600px;
-      width: 100%;
-      text-align: center;
-    }
-    .question {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-    .options button {
-      display: block;
-      width: 100%;
-      background: #111;
-      color: white;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 1.2rem;
-      border: 2px solid cyan;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .options button.correct {
-      background-color: #00ff88;
-    }
-    .options button.wrong {
-      background-color: #ff4444;
-    }
-    #next-btn, #restart-btn {
-      background-color: cyan;
-      color: black;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    #score-container {
-      display: none;
-    }
-    footer {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
-  </style>
-</head>
-<body>
-  <div class="quiz-container">
-    <div id="quiz">
-      <div class="question" id="question">Loading...</div>
-      <div class="options" id="options"></div>
-      <button id="next-btn">Next</button>
-    </div>
-    <div id="score-container">
-      <h2>Your Score: <span id="score"></span></h2>
-      <button id="restart-btn">Restart Quiz</button>
-    </div>
-    <footer>Created with ❤️ by MONDAL ARTS</footer>
-  </div>
-  <script>
-    const quizData = [
-      {
-        question: "1️⃣ What do I like?",
-        options: ["Make game 🎮", "Do drawing 🎨", "Play game 🕹️", "Bak**di 🤪"],
-        answer: [0]
-      },
-      {
-        question: "2️⃣ What’s my other name in my friend circle?",
-        options: ["Angshu", "Shonku 🧠", "B*******", "Ankus"],
-        answer: [1]
-      },
-      {
-        question: "3️⃣ Why are you here?",
-        options: ["For nothing 🤡", "Bak**di", "1 & 2", "3 ✅"],
-        answer: [2, 3]
-      },
-      {
-        question: "4️⃣ What's your future?",
-        options: ["IIT", "NEET", "1 & 2", "Nothing 💤"],
-        answer: [3]
-      },
-      {
-        question: "5️⃣ Is Angshu a good boy?",
-        options: ["Yes 💚", "1", "2", "3"],
-        answer: [0, 1, 2, 3]
-      }
-    ];const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("next-btn");
-const restartBtn = document.getElementById("restart-btn");
-const scoreEl = document.getElementById("score");
-const quizBox = document.getElementById("quiz");
-const scoreBox = document.getElementById("score-container");
+# 🎮 Angshu Quiz Game
 
-let currentQ = 0;
-let score = 0;
+A fun and colorful browser-based quiz game built with HTML, CSS, and JavaScript.
 
-function loadQuestion() {
-  const q = quizData[currentQ];
-  questionEl.textContent = q.question;
-  optionsEl.innerHTML = "";
+## 🚀 Features
 
-  q.options.forEach((option, index) => {
-    const btn = document.createElement("button");
-    btn.textContent = option;
-    btn.onclick = () => selectAnswer(index, btn);
-    optionsEl.appendChild(btn);
-  });
-}
+- 5 questions with funny and smart answers
+- Colorful and animated UI
+- Shows score after finishing
+- Includes funny audio effects
 
-function selectAnswer(index, btn) {
-  const q = quizData[currentQ];
-  const isCorrect = Array.isArray(q.answer) ? q.answer.includes(index) : q.answer === index;
+## 🗂️ Files
 
-  if (isCorrect) {
-    btn.classList.add("correct");
-    score++;
-  } else {
-    btn.classList.add("wrong");
-  }
+- `index.html` — main game file
+- `.m4a` — sound effect file
+- `README.md` — this file!
 
-  // Disable all buttons after answer selected
-  Array.from(optionsEl.children).forEach(b => b.disabled = true);
-}
+## 💻 Live Preview (optional)
 
-nextBtn.onclick = () => {
-  currentQ++;
-  if (currentQ < quizData.length) {
-    loadQuestion();
-  } else {
-    endQuiz();
-  }
-};
+When GitHub Pages is enabled:  
+👉 `https://mondalarts.github.io/quiz/`
 
-function endQuiz() {
-  quizBox.style.display = "none";
-  scoreBox.style.display = "block";
-  scoreEl.textContent = `${score} / ${quizData.length}`;
-}
+## ✍️ Made by
 
-restartBtn.onclick = () => {
-  currentQ = 0;
-  score = 0;
-  quizBox.style.display = "block";
-  scoreBox.style.display = "none";
-  loadQuestion();
-};
-
-// Load first question
-loadQuestion();
-
-  </script>
-</body>
-</html>
+**MONDAL ARTS (Angshu)** with ❤️  
